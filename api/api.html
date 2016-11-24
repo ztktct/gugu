@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>追书API文档</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
+    <style>
+        .dntknow {
+            color: #999;
+        }
+        
+        .panel {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #eee
+        }
+        
+        .intro {
+            border-left: 6px solid #5bc0de;
+        }
+        
+        .table .panel {
+            margin: 0;
+        }
+        
+        .wrap {
+            overflow: hidden
+        }
+        
+        .l {
+            float: left;
+            width: 50%;
+        }
+        
+        .l:not(:first-child) {
+            padding-left: 10px;
+        }
+        
+        .l:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="panel intro">若非特殊指出，默认接口地址为：http://api.zhuishushenqi.com，默认发送方式为GET请求</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th width="20%">接口</th>
+                    <th>参数</th>
+                    <th>数据</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--检查更新-->
+                <tr>
+                    <td>检查更新</td>
+                    <td>/book?view=updated</td>
+                    <td>id=书籍ID1,书籍ID2,书籍ID3</td>
+                    <td>
+                        <div class="panel intro">
+                            <p>books:存放搜索出来的书本列表</p>
+                            <ul>
+                                <li>_id:书本id</li>
+                                <li>author:作者</li>
+                                <li>cat:题材</li>
+                                <li>cover:封面图片</li>
+                                <li class="dntknow">hasCp:是否完结？(不清楚该参数含义)</li>
+                                <li>lastChapter:最新章节</li>
+                                <li>latelyFollower：追更人数</li>
+                                <li>retentionRatio：读者存留率</li>
+                                <li>shortIntro：简介</li>
+                                <li>site:来源</li>
+                                <li>title:书名</li>
+                                <li>wordCount：字数</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--热门搜索关键词-->
+                <tr>
+                    <td>大家都在搜</td>
+                    <td>/book/hot-word </td>
+                    <td></td>
+                    <td>
+                        hotWords,数组类型，存放关键词
+                    </td>
+                </tr>
+                <!--搜索关联词-->
+                <tr>
+                    <td>搜索关联词</td>
+                    <td>/book/auto-complete</td>
+                    <td>query=关键词</td>
+                    <td>
+                        keyWords:存放关键词
+                    </td>
+                </tr>
+                <!--搜索结果-->
+                <tr>
+                    <td>搜索结果</td>
+                    <td>/book/fuzzy-search</td>
+                    <td>query=关键词</td>
+                    <td>
+                        <p>_id:书籍ID</p>
+                        <p>author:作者</p>
+                        <p>chaptersCount:总章节数</p>
+                        <p>referenceSource: 参考源</p>
+                        <p>updated：更新时间</p>
+                        <p>lastChapter:最新章节</p>
+                    </td>
+                </tr>
+                <!--书籍信息-->
+                <tr>
+                    <td>书籍信息</td>
+                    <td>/book/书籍ID</td>
+                    <td></td>
+                    <td>
+                        <div class="wrap">
+                            <div class="l">
+                                <p>_id:书籍ID</p>
+                                <p>author:作者</p>
+                                <p>chaptersCount:总章节数</p>
+                                <p>cover: 封面</p>
+                                <p>gender：性别</p>
+                                <p>lastChapter：最新章节名称</p>
+                                <p>latelyFollower: 追更人数</p>
+                                <p>longIntro: 长简介</p>
+                                <p>majorCate: 主类别</p>
+                                <p>minorCate：副类别</p>
+                                <p>retentionRatio: 读者存留率</p>
+                                <p>serializeWordCount: 日更新字数</p>
+                                <p>tags: 标签</p>
+                                <p>title: 书名</p>
+                                <p>updated：更新时间</p>
+                                <p>wordCount: 总字数</p>
+                            </div>
+                            <div class="l">
+                                <p class="dntknow">latelyFollowerBase=0</p>
+                                <p class="dntknow">_le=False ??</p>
+                                <p class="dntknow">allowMonthly=False ??</p>
+                                <p class="dntknow">allowVoucher=True ??</p>
+                                <p class="dntknow">creater= ？？</p>
+                                <p class="dntknow">donate=False ??</p>
+                                <p class="dntknow">hasCp=True </p>
+                                <p class="dntknow">isSerial=True</p>
+                                <p class="dntknow">minRetentionRatio=0</p>
+                                <p class="dntknow">postCount=864</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!--相关推荐-->
+                <tr>
+                    <td>相关推荐</td>
+                    <td>/book/书籍ID/recommend</td>
+                    <td></td>
+                    <td>
+                        <div class="panel intro">
+                            <p>books:相关的书籍列表</p>
+                            <ul>
+                                <li>_id:书本id</li>
+                                <li>author:作者</li>
+                                <li>cat:题材</li>
+                                <li>cover:封面图片</li>
+                                <li>lastChapter:最新章节</li>
+                                <li>latelyFollower：追更人数</li>
+                                <li>majorCate: 主类别</li>
+                                <li>minorCate：副类别</li>
+                                <li>retentionRatio：读者存留率</li>
+                                <li>shortIntro：简介</li>
+                                <li>site:来源</li>
+                                <li>title:书名</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <!--按标签搜索-->
+                <tr>
+                    <td>同一标签书籍</td>
+                    <td>/book/by-tags</td>
+                    <td>
+                        <code>
+                            tags:标签名,</br/>
+                            start:从第几个开始获取，</br/>
+                            limit：每次获取个数
+                        </code>
+                    </td>
+                    <td>
+                        <div class="panel intro">
+                            <p>books:指定标签下的书籍列表</p>
+                            <ul>
+                                <li>_id:书本id</li>
+                                <li>author:作者</li>
+                                <li>cat:题材</li>
+                                <li>cover:封面图片</li>
+                                <li>lastChapter:最新章节</li>
+                                <li>latelyFollower：追更人数</li>
+                                <li>majorCate: 主类别</li>
+                                <li>minorCate：副类别</li>
+                                <li>retentionRatio：读者存留率</li>
+                                <li>shortIntro：简介</li>
+                                <li>tags:标签</li>
+                                <li>title:书名</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--书籍具体信息部分-->
+
+                <tr>
+                    <td>书籍摘要</td>
+                    <td>/btoc </td>
+                    <td>
+                        <code>
+                            view=summary <br/>
+                            book=书籍ID
+                        </code>
+                    </td>
+                    <td>
+                        <p>_id:书籍ID</p>
+                        <p>chaptersCount:总章节数</p>
+                        <p>host: 来源网站</p>
+                        <p>isCharge:是否付费</p>
+                        <p>lastChapter：最新章节名称</p>
+                        <p>link：链接地址</p>
+                        <p>name: 书源名称</p>
+                        <p>source: 书源</p>
+                        <p>updated：更新时间</p>
+                        <p class="dntknow">starting=True</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>章节信息</td>
+                    <td>/btoc/书籍ID </td>
+                    <td>
+                        view=chapters
+                    </td>
+                    <td>
+                        <p>_id:书籍ID</p>
+                        <p class="dntknow">book=5702151c1c8e4db9483762d6</p>
+                        <p>host: 来源网站</p>
+                        <p>link：链接地址</p>
+                        <p>name: 书源名称</p>
+                        <p>updated：更新时间</p>
+                        <div class="panel intro">
+                            <p>chapters:章节列表</p>
+                            <ul>
+                                <li>id:章节id</li>
+                                <li>currency:书币(不用)</li>
+                                <li>isVip:是否时VIP章节</li>
+                                <li>link:链接</li>
+                                <li>unreadble：是否未读？？</li>
+                                <li>title:书名</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--章节内容-->
+                <tr>
+                    <td>章节内容</td>
+                    <td>http://chapter2.zhuishushenqi.com/chapter/章节链接(link,包含http://)</td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <div class="panel intro">
+                            <p>chapter:存放章节相关信息</p>
+                            <ul>
+                                <li>title: 标题</li>
+                                <li>body || cpContent : 章节内容，优先采用cpContent</li>
+                                <li>isVip:是否是VIP章节</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--换源-->
+                <tr>
+                    <td>换源</td>
+                    <td>/atoc </td>
+                    <td>
+                        <code>
+                            view=summary<br/>
+                            book=书籍ID
+                        </code>
+                    </td>
+                    <td>
+                        <p>_id:书籍ID</p>
+                        <p>chaptersCount：章节总数</p>
+                        <p>host:来源网站</p>
+                        <p>isCharge: 是否收费</p>
+                        <p>lastChapter: 最新章节</p>
+                        <p>link：链接地址</p>
+                        <p>name:来源网站名称</p>
+                        <p>source：来源</p>
+                        <p class="dntknow">starting=False</p>
+                        <p>updated:更新时间</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

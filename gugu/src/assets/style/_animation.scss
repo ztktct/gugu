@@ -1,0 +1,49 @@
+// v-enter: 定义进入过渡的开始状态。在元素被插入时生效，在下一个帧移除。
+
+// v-enter-active: 定义进入过渡的结束状态。在元素被插入时生效，在 transition/animation 完成之后移除。
+
+// v-leave: 定义离开过渡的开始状态。在离开过渡被触发时生效，在下一个帧移除。
+
+// v-leave-active: 定义离开过渡的结束状态。在离开过渡被触发时生效，在 transition/animation 完成之后移除。
+
+// 缩放进出
+.scale-enter,.scale-leave-active{
+	opacity:0;
+	transform:scale(.5);
+}
+.scale-enter-active{
+	z-index:15;
+	transition: opacity .3s ease, transform .3s ease;
+}
+.scale-leave-active{
+	transition: opacity .3s ease, transform .3s ease;
+}
+
+// 左进右出
+.move-enter{
+	z-index:15;
+	transform:translate3d(100%, 0, 0);
+}
+.move-enter-active{
+	transition:transform .3s ease;
+}
+.move-leave{
+	transform:none;
+	z-index:-1;
+}
+.move-leave-active{
+	transform:translate3d(100%, 0, 0);
+	transition:transform .3s ease;
+}
+
+// 渐现
+.fade-enter{
+	opacity: 0;
+}
+.fade-enter-active{
+	transition: opacity .2s ease;
+}
+.fade-leave-active{
+	opacity: 0;
+	transition:  opacity .2s ease;
+}

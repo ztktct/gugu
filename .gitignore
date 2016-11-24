@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+gugu/dist/
+npm-debug.log
+gugu/debug.log
+gugu/node_modules/
+gugu_server/node_modules/
