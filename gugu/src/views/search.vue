@@ -95,7 +95,7 @@
         		}
         	}
         },
-        mounted() {
+        activated() {
         	this.query = this.$route.params.query || '';
         	if (this.query) {
         		this.canShowLists = false

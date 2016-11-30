@@ -90,9 +90,9 @@
             &.hasRightBorder {
                 border-left: 1px solid darken($blue, 10%);
             }
-            &:active{
+            /* &:active{
             	background-color: darken($blue, 10%);
-            }
+            } */
         }
         &-left,
         &-right {

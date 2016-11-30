@@ -1,5 +1,12 @@
 @import './sass_mixins';
-
+%flex1{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width:0;
+}
 .page,
 #app {
     height: 100%;
@@ -33,6 +40,10 @@
 }
 
 .cell {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
     background-color: #fff;
@@ -56,7 +67,7 @@
                 top: 50%;
                 width: 8px;
                 height: 8px;
-                margin-top: -4px;
+                margin-top: -14px;
                 border-radius: 50%;
                 background-color: #29b6f6;
             }
@@ -70,7 +81,7 @@
         }
     }
     .rightctx{
-        flex: 1;
+        @extend %flex1;
         position: relative;
         @extend %one-px-border;
         h3{
@@ -88,16 +99,19 @@
 // 搜索栏样式
 .m-search-input{
     height: 64px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: flex;
     position:relative;
     input{
+        @extend %flex1;
         -webkit-appearance: none;
         background: transparent;
         border: 0;
         padding: 10px 2em 10px 10px;
         color: #fff;
-        flex: 1;
-        width:0;
         height: 64px;
         // line-height: 64px;
         font-size: 16px;
@@ -108,6 +122,7 @@
         position:absolute;
         top:50%;
         right:5%;
+        -webkit-transform:translateY(-50%);
         transform:translateY(-50%);
         color:rgba(#fff,.8);
         font-size:20px;

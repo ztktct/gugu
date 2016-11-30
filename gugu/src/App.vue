@@ -2,9 +2,9 @@
     <div id="app">
         <Home></Home>
         <transition name='move' mode='in-out'>
-          <!-- <keep-alive> -->
+          <keep-alive>
             <router-view></router-view>
-          <!-- </keep-alive> -->
+          </keep-alive>
         </transition>
     </div>
 </template>
@@ -19,4 +19,11 @@
       Home
     }
   }
+  let app = document.getElementById('app')
+  app.addEventListener('touchstart', function(e) {
+    e.stopPropagation();
+  })
+  document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+  })
 </script>

@@ -1,35 +1,35 @@
 <template>
-	<div class="reader page page-fixed reading">
+	<div class="reader page page-fixed" :class='{reading: !showMenu, night: isNight}'>
 		<Navbar
 			:hasLeftBorder='false'
 			:hasSearchIcon='false'
 			bgcolor='#333'>
-				<h2 class="navbar-h2">将夜</h2>
-				<h3 class="navbar-h3" slot='navbar-right'>换源</h3>
+				<h2 class="navbar-h2">{{currentChapterCtx.title}}</h2>
+				<h3 v-if='isAddShelf' @click='goToSources' class="navbar-h3" slot='navbar-right'>换源</h3>
 		</Navbar>
 		<div class="reader-container">
-			<h2 class="reader-tit">卷一 京城居 大不易 第1章 京城的日与夜</h2>
-			<div class="reader-context">
-				宁缺<br/>
-				　　穿越者。书院十三先生，书院天下行走。聪明、冷血、无耻，写得一手好字，也练的一身杀人手法。林光远案遗孤，原是将军府门房的儿子，林光远被抄家诛九族时，不甘心被当做少爷的替死鬼而杀掉少爷和管事逃走，逃走途中捡到桑桑和黑伞。在杀仇人后重伤逃走时被朱雀击碎雪山气海，再由黑伞重建，最后借助陈皮皮的通天药丸，终有资格进入修真世界。测试中胜过隆庆而进入书院二层楼，师从颜瑟学符法。在魔宗山门被隆庆用桑桑威胁，含怒立下赌约最后一箭废除隆庆修为。进入山门中遇到莲生，临危时领悟小师叔的浩然气从而入魔，成功杀掉莲生，却在最后被莲生传下衣钵。颜瑟死后接掌惊神阵，并从老师绝学井字符中悟出自己的神符“二字符”。在夏侯归老当天对他进行生死挑战，在桑桑帮助下把他杀死，大仇得报。<br/>
-				　　听从夫子建议送桑桑去烂柯寺求医，领悟佛门四大手印，在桑桑被认为是冥王之女后，和桑桑一齐进入棋盘开始逃亡。在卫光明的追随者掩护下带着桑桑向北方逃亡，被唐率领的荒人收留，后被夫子所救。和桑桑于热海旁在夫子见证下成亲。夫子和桑桑登天后，回到长安修复惊神阵，与莫山山联手用乂字符阻拦观主，最后宁缺借助惊神阵一刀废了观主。隐约知道桑桑在西陵神殿，于是冒险离开长安赶去确认。破坏了光明祭，在光明神殿中见到昊天（桑桑），在经过长时间相爱相杀后一同离开西陵，带她去看人间。被她骗入佛祖棋盘，用千年时间帮她去除红尘意斩断尘缘，最终无法阻止她离去。与众人试图射杀酒徒。<br/>
-				　　第二次灭唐之战中，立于长安城头，用元十三箭震慑世间众人，得知桑桑仍在人间后，离开长安，四处诛杀强敌，于极北荒原寻得桑桑，终与其不分彼此，不再分开。后观主认为已成人的昊天不再是昊天，无法庇佑众生，维持规则秩序，携七卷天书决定取而代之。为躲避观主追杀，携桑桑往长安奔逃，路遇被观主许诺事成后得以永生的酒徒所拦，在事先由书院所设之局以及朝小树的舍命帮助下击杀酒徒，回到长安。<br/>
-				　　后观主重创大师兄，来到长安城下，利用七卷天书，将自身与神国规则融合，行换天之事，并要夺取桑桑神格成为新的昊天，生死之际，与桑桑共同引领整个人间的意志写出真正的神符——人字符，开天辟地，彻底击杀知守观观主，并由桑桑破碎昊天世界规则限制，成就今日地球。<br/>
-				最终和桑桑得以修成正果，幸福生活~<br/>
-				桑桑<br/>
-				　　宁缺的侍女，一个黑不溜秋的小姑娘，因为从小受到阴寒侵体，导致体质虚弱，身体长期冰凉。其是宁缺最信任的人，亦是挚爱之人，从宁缺在逃亡途中将其捡起，两人便开始相依为命，在护送公主回长安的过程中，结识了公主李渔。后来在宁缺前往荒原寻觅天书之时，因为偶然机会成为光明大神官卫光明的唯一弟子。<br/>
-				　　灭杀夏侯后，寒病复发，宁缺在夫子建议下带她去烂柯寺求医，七念和大师兄做了治病的约定，但七念背信弃义让桑桑在盂兰铃声中被认出是冥王之女，在歧山大师帮助下成功进入棋盘从而开始漫长的逃亡。在荒原被世界联军所围，释放体内的寒气与联军对抗。引发神国之门打开，天上神龙降临。<br/>
-				　　夫子察觉桑桑的身份之后，带着桑桑和宁缺游历世界各地，吃遍人间美食希望昊天能够知晓人间的美好。两人于热海旁在夫子见证下成亲，之后在泗水畔觉醒化身昊天邀夫子一同登天一战，后因夫子破坏了神国之门化身为月堵住回去之路，桑桑落入人间无法回归神国。<br/>
-				　　觉醒成昊天之后，回到西陵神殿召开光明祭试图打通回去神国的路，被宁缺等人破坏，被迫与宁缺重建本命联系，在经过长时间相爱相杀后一同离开西陵。跟随宁缺看遍人间，利用佛祖棋盘去除夫子所留人间之力，利用人间信仰之力所化神舟离开回到神国，却不料失败而到了岷山。<br/>
-				　　在长安城上，借力量于宁缺，依靠宁缺用全人间之力所画的人字符开天辟地，彻底击杀依靠七卷天数欲行“换天”之事的知守观观主，随后亲自破碎昊天世界，成就今日地球。<br/>
-				最终和宁缺幸福生活在一块~
-			</div>
+			<Loading :isLoading='isLoading' :automatic='true'>
+				<!-- 一个章节，考虑预先加载下一章节 -->
+				<!-- 应该有多个 .reader-chapter -->
+				<div class="reader-chapter">
+					<h2 class="reader-tit">{{currentChapterCtx.title}}</h2>
+					<div class="reader-context">
+						<div class="cpContent" ref='cpContent' v-html='currentChapterCtx.cpContent || currentChapterCtx.body'></div>
+					</div>
+				</div>
+			</Loading>
 		</div>
 		<footer class="reader-footer">
 			<ul>
-				<li>
-					<Icon className='icon-yejian'></Icon>
-					<p>夜间</p>
+				<li @click='changeNightMode'>
+					<template v-if='!isNight'>
+						<Icon className='icon-yejian'></Icon>
+						<p>夜间</p>
+					</template>
+					<template v-else>
+						<Icon className='icon-baitianmoshi'></Icon>
+						<p>白天</p>
+					</template>
 				</li>
 				<li>
 					<Icon className='icon-shezhi'></Icon>
@@ -39,18 +39,33 @@
 					<Icon className='icon-iconfontxiazai'></Icon>
 					<p>缓存</p>
 				</li>
-				<li>
+				<li @click='toggleCatalog'>
 					<Icon className='icon-menu-a'></Icon>
 					<p>目录</p>
 				</li>
 			</ul>
 		</footer>
 		
-		<!-- 阅读提示 -->
-		<div class="reader-tips hide">
+		<!-- 阅读提示 / 触摸板-->
+		<div class="reader-tips hide" ref='touchpad'>
 			<div class="left">上一页</div>
 			<div class="mid">显示/隐藏菜单</div>
 			<div class="right">下一页</div>
+		</div>
+
+		<!-- 目录 -->
+		<div class="reader-catalog" v-if='showCatalog' @click='toggleCatalog'>
+			<div class="context">
+				<h3>{{currentChapterCtx.title}}</h3>
+				<ul>
+					<li 
+					v-for='(chapter, index) in chapters' 
+					@click.stop='toggleChapter(index)'
+					:class='{current: index == currentIndex}'>
+						{{chapter.title}}
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -58,16 +73,208 @@
 <script>
 	import Navbar from '../components/navbar';
 	import Icon from '../components/icons';
+	import Loading from '../components/loading';
+	import Promise from 'es6-promise';
+	import PageSwiper from '../lib/PageSwiper';
+	import {mapState, mapActions} from 'vuex';
+	import * as Book from '../lib/book_utils';
+
+	let pageSwiper = null;
 
 	export default {
+		data() {
+			return {
+				isLoading: false,
+				bookId: 0,				// 书籍ID
+				isNight: false,			// 是否是夜间模式
+				showMenu: false,		// 是否显示菜单
+				showCatalog: false, 	// 是否显示目录
+				isAddShelf: false,		// 是否添加到书架
+				currentSource: {}, 		// 当前书籍来源
+				chapters: [],			// 所有章节信息
+				currentIndex: 0, 		// 当前章节序号
+				currentChapterCtx: {}	// 当前章节内容
+			}
+		},
 		components: {
 			Navbar,
-			Icon
+			Icon,
+			Loading
+		},
+		computed: {
+			...mapState([
+				'bookShelf'
+			])
+		},
+		methods: {
+			...mapActions([
+				'setShelfChapter'
+			]),
+			// 切换夜间 / 白天模式
+			changeNightMode() {
+				let meta = document.querySelector('meta[name=theme-color]');
+				this.isNight = !this.isNight;
+				if (this.isNight) {
+					meta.setAttribute('content', '#222222');
+				} else {
+					meta.setAttribute('content', '#4393E2');
+				}
+			},
+			// 切换显示目录
+			toggleCatalog() {
+				this.showCatalog = !this.showCatalog;
+			},
+			// 切换章节
+			toggleChapter(index) {
+				this.isLoading = true;
+				this.showCatalog = false;	// 隐藏目录
+				this.showMenu = false;	// 隐藏菜单
+				return setCpcontext.call(this, this.chapters, index)
+				.then(chapter => {
+					this.isLoading = false;
+					// 如果该书籍已添加到书架的话，会更新其当前章节
+					let playload = {
+						bookId: this.bookId,
+						chapter: chapter,
+						index: this.currentIndex
+					}
+					this.setShelfChapter(playload);
+				})
+			},
+			goToSources() {
+				this.$router.replace('/bookSources/' + this.bookId);
+			}
+		},
+		mounted() {
+			let _self = this;
+			/* eslint-disable no-new */
+			pageSwiper = new PageSwiper(this.$refs.touchpad, this.$refs.cpContent, {
+				// 如果是第一章，阻止其向右滑动
+				beforePrevHandle(swiper) {
+					if (_self.currentIndex <= 0) {
+						swiper.stop();
+					}
+				},
+				// 返回上一章
+				prevHandle(swiper) {
+					--_self.currentIndex;
+					if (_self.currentIndex < 0) {
+						_self.currentIndex = 0;
+						return;
+					}
+					// 获取上一章节内容
+					_self.toggleChapter(_self.currentIndex)
+					.then(() => {
+						swiper.slideTo(swiper.maxStep);
+					})
+				},
+				// 如果是最后一张，阻止其向左滑动
+				beforeNextHandle(swiper) {
+					if (_self.currentIndex >= _self.chapters.length - 1) {
+						swiper.stop();
+					}
+				},
+				// 翻到下一章
+				nextHandle(swiper) {
+					++_self.currentIndex;
+					if (_self.currentIndex >= _self.chapters.length) {
+						_self.currentIndex = _self.chapters.length - 1;
+						return;
+					}
+					// 获取下一章节内容
+					_self.toggleChapter(_self.currentIndex);
+				},
+				midTapEnd() {
+					_self.showMenu = !_self.showMenu;
+				}
+			})
+		},
+		activated() {
+			this.bookId = this.$route.params.bookId;
+			// 检测是否已经添加到书架
+			for (let shelf of this.bookShelf) {
+				if (shelf._id == this.bookId) {
+					this.isLoading = true;
+					this.isAddShelf = true;
+					this.currentSource = shelf.currentSource;
+					Book.getChapters.call(this, this.currentSource)
+						.then(chapters => {
+							this.isLoading = false;
+							this.chapters = chapters;
+							setCpcontext.call(this, this.chapters, shelf.currentChapter._index);
+						});
+					return;
+				}
+			}
+			// 如果书籍未收藏，默认第0个书源第
+			this.isAddShelf = false;
+			this.currentIndex = 0;
+			this.isLoading = true;
+			changeSource.call(this, 0).then(() => {
+				this.isLoading = false;
+			});
+		},
+		deactivated() {
+			this.showMenu = false;
+			this.showCatalog = false;
 		}
+	}
+
+	// 设置书籍来源为第 `index` 个
+	function setSources(bookId, index) {
+		return new Promise(resolve => {
+			Book.getSources.call(this, bookId)
+			.then(sources => {
+				if (sources.length === 1) index = 0;
+				this.currentSource = sources[index];
+				resolve(this.currentSource);
+			})
+		});
+	}
+
+	// 设置某个 `source` 来源的所有章节信息
+	function setChapters(source) {
+		return new Promise(resolve => {
+			Book.getChapters.call(this, source)
+			.then(chapters => {
+				this.chapters = chapters;
+				resolve(chapters);
+			});
+		});
+	}
+
+	// 显示第 `index` 章节的内容
+	function setCpcontext(chapters, index) {
+		return new Promise(resolve => {
+			Book.getCpcontext.call(this, chapters, index)
+			.then(chapter => {
+				this.currentIndex = index;
+				this.currentChapterCtx = chapter;
+				setTimeout(() => {
+					pageSwiper.init();
+					resolve(chapter);
+				});
+			});
+		});
+	}
+
+	// 换源
+	function changeSource(index) {
+		return new Promise(resolve => {
+			setSources.call(this, this.bookId, index)
+			.then(sources => {
+				return setChapters.call(this, sources);
+			}).then(chapters => {
+				return setCpcontext.call(this, chapters, this.currentIndex)
+			}).then(() => {
+				resolve();
+			})
+		})
 	}
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
+	@import '../assets/style/sass_mixins';
 	.reader{
 		background: #f7dbc9 url(../assets/pager_bg.jpg) no-repeat center center;
 		background-size: cover;
@@ -76,9 +283,17 @@
 				background-color: #333;
 			}
 		}
+		/* 夜间模式 */
+		&.night{
+			background: #222;
+			.reader-context,
+			.reader-tit{
+				color: #777;
+			}
+		}
 		/* 阅读状态，不显示头部和底部 */
 		&.reading{
-			.navbar{
+			>.navbar{
 				z-index: 15;
 				transform: translate3d(0, -100%, 0);
 			}
@@ -89,13 +304,16 @@
 		}
 		&-container{
 			padding: 10px;
+			height: 100%;
+		}
+		&-chapter{
 			display: flex;
 			flex-direction: column;
 			height: 100%;
 		}
 		&-tit{
 			font-weight: normal;
-			margin: 5px 0;
+			margin: 5px 0 10px;
 			font-size: 12px;
 			color: darken(#a99284, 10%);
 			white-space: nowrap;
@@ -103,16 +321,29 @@
 			text-overflow: ellipsis;
 		}
 		&-context{
+			-webkit-perspective:1;
 			font-size: 16px;
 			line-height: 1.7;
 			flex: 1;
-			height: 0;
+			height: 100%;
 			overflow: auto;
 			color: #333;
+			padding-bottom: 10px;
+			.cpContent{
+				flex: 1;
+				text-indent: 2em;
+				height: 100%;
+				column-width: 100vw;
+				column-width: calc(100vw - 20px);
+				column-count: 1;
+				padding-left: 10px;
+				column-gap: 10px;
+			}
 		}
 		/* 底栏 */
 		&-footer{
 			position: absolute;
+			z-index: 10;
 			bottom: 0;
 			left: 0;
 			right: 0;
@@ -136,13 +367,16 @@
 			}
 		}
 		/* 阅读提示 */
+		&-catalog,
 		&-tips{
 			position: absolute;
-			z-index: 10;
 			left: 0;
 			right: 0;
 			bottom: 0;
 			top: 0;
+		}
+		&-tips{
+			z-index: 5;
 			display: flex;
 			background: rgba(#000,.8);
 			color: #fff;
@@ -164,6 +398,48 @@
 			}
 			&.hide{
 				opacity: 0;
+			}
+		}
+		/* 目录 */
+		&-catalog{
+			z-index: 15;
+			.context{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				padding-bottom:10px;
+				width: 80vw;
+				height: 70vh;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				background: #fff;
+			}
+			h3{
+				margin: 0;
+				font-weight: normal;
+				padding: 15px 10px 10px;
+				box-shadow: 0 0 5px #999;
+				@include ellipsis(1);
+			}
+			ul{
+				flex: 1;
+				padding: 10px;
+				height: 100%;
+				overflow: auto;
+				&::-webkit-scrollbar{width:5px;}
+				&::-webkit-scrollbar-track-piece{background:transparent;}
+				&::-webkit-scrollbar-thumb:vertical{height: 20px;background:#4393E2;}
+				&::-webkit-scrollbar-thumb:horizontal{width: 2px;background:#4393E2;}
+			}
+			li{
+				padding: 12px 0;
+				@include ellipsis(1);
+				@extend %one-px-border;
+				&.current{
+					color: #4393E2;
+				}
 			}
 		}
 	}

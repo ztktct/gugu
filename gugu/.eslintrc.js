@@ -28,6 +28,8 @@ module.exports = {
     "space-before-function-paren": ["error", "never"],
     // 允许空格和tab混合使用
     "no-mixed-spaces-and-tabs": 0,
-    "no-tabs": 0
+    "no-tabs": 0,
+    // 允许使用 ==
+    "eqeqeq": 0
   }
 }

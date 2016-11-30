@@ -52,7 +52,7 @@
 %text-hide{
 	overflow:hidden;
 	position:relative;
-	&:after{
+	&:before{
 		content:'';
     	position:absolute;
     	left:0;

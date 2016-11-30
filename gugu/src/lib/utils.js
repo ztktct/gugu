@@ -5,13 +5,13 @@
  * @return { Number }   不重复的随机数
  */
 function getDifferentNum(a, max) {
-	let random = Math.floor(Math.random() * max);
-	for (let i of a) {
-		if (random === i) {
-			return getDifferentNum(a, max);
-		}
-	}
-	return random;
+    let random = Math.floor(Math.random() * max);
+    for (let i of a) {
+        if (random === i) {
+            return getDifferentNum(a, max);
+        }
+    }
+    return random;
 }
 
 /**
@@ -22,18 +22,28 @@ function getDifferentNum(a, max) {
  * @return {[type]}        [description]
  */
 let randomArray = function(array, number, max = array.length) {
-	let cacheArr = [];
-	let cacheNum = [];
-	for (let i = 0; i < number; i++) {
-		cacheNum[i] = getDifferentNum(cacheNum, max)
-	}
-	cacheNum.forEach((n, i) => {
-		cacheArr[i] = array[n]
-	});
-	return cacheArr;
+    let cacheArr = [];
+    let cacheNum = [];
+    for (let i = 0; i < number; i++) {
+        cacheNum[i] = getDifferentNum(cacheNum, max)
+    }
+    cacheNum.forEach((n, i) => {
+        cacheArr[i] = array[n]
+    });
+    return cacheArr;
+}
+
+// 指定范围数组求和, 不包括end
+let sumArray = function(array, begin = 0, end = array.length) {
+    let sum = 0;
+    for (let i = begin; i < end; i++) {
+        sum += parseFloat(array[i]);
+    }
+    return sum;
 }
 
 export {
-	getDifferentNum,
-	randomArray
+    getDifferentNum,
+    randomArray,
+    sumArray
 };

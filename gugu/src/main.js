@@ -4,6 +4,7 @@ import router from './router';
 import store from './vuex/store';
 import VueResource from 'vue-resource';
 import { SERVER_ADDRESS } from './vuex/localdata';
+import timeSemantic from './lib/timeSemantic';
 
 Vue.use(VueResource);
 // vue-resource 全局设置
@@ -13,6 +14,7 @@ Vue.http.interceptors.push((request, next) => {
     // continue to next interceptor
     next(response => {
         if (!response.ok) {
+            console.log(response)
             console.log('获取数据失败');
             return;
         }
@@ -23,6 +25,11 @@ Vue.http.interceptors.push((request, next) => {
         }
     });
 });
+
+// vue 过滤
+Vue.filter('timeSemantic', function(value) {
+    return timeSemantic(value)
+})
 
 // 移动端自适应解决方案
 require('./lib/autoFontSize.js');

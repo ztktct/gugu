@@ -1,28 +1,31 @@
 <template>
 	<div class="container">
-		<div class="hot-keywords">
-			<div class="hot-keywords-tit">
-				<span>大家都在搜</span>
-				<span @click='toggleWords'><Icon className='icon-shuaxin'></Icon>换一批</span>
+		<Loading :isLoading='isLoading' :automatic='true'>
+			<div class="hot-keywords">
+				<div class="hot-keywords-tit">
+					<span>大家都在搜</span>
+					<span @click='toggleWords'><Icon className='icon-shuaxin'></Icon>换一批</span>
+				</div>
+				<ul class="hot-keywords-lists">
+					<li v-for='(word, index) in hotWords' @click='searchBook(word)' :key='index'>{{word}}</li>
+				</ul>
 			</div>
-			<ul class="hot-keywords-lists">
-				<li v-for='(word, index) in hotWords' @click='searchBook(word)' :key='index'>{{word}}</li>
-			</ul>
-		</div>
-		<div class="history">
-			<div class="history-tit">
-				<span>搜索历史</span>
-				<span @click='removeHistory'><Icon className='icon-qingkongshanchu'></Icon>清 空</span>
+			<div class="history">
+				<div class="history-tit">
+					<span>搜索历史</span>
+					<span @click='removeHistory'><Icon className='icon-qingkongshanchu'></Icon>清 空</span>
+				</div>
+				<ul class="history-lists">
+					<li class="cell" v-for='history in bookHistory' @click='searchBook(history)'><Icon className='icon-lishi'></Icon>{{history}}</li>
+				</ul>
 			</div>
-			<ul class="history-lists">
-				<li class="cell" v-for='history in bookHistory' @click='searchBook(history)'><Icon className='icon-lishi'></Icon>{{history}}</li>
-			</ul>
-		</div>
+		</Loading>
 	</div>
 </template>
 
 <script>
     import Icon from '../components/icons';
+    import Loading from '../components/loading';
     import {API_ADDRESS} from '../vuex/localdata';
     import {randomArray} from '../lib/utils';
     import { mapState, mapActions } from 'vuex';
@@ -30,12 +33,14 @@
     export default {
     	data() {
     		return {
+    			isLoading: false, // 加载中
     			hotWordsAll: [],  // 全部热门关键词
     			hotWords: []	  // 显示的热门搜索关键词
     		}
     	},
     	components: {
-    		Icon
+    		Icon,
+    		Loading
     	},
         computed: {
         	...mapState([
@@ -56,13 +61,14 @@
         		this.$emit('searchBook');
         	}
         },
-        created() {
+        mounted() {
         	// 获取热门关键词
-        	let _self = this;
-        	_self.$http.get(API_ADDRESS + '/book/hot-word')
+        	this.isLoading = true;
+        	this.$http.get(API_ADDRESS + '/book/hot-word')
         		.then(response => {
-        			_self.hotWordsAll = response.body.hotWords;
-        			_self.hotWords = randomArray(_self.hotWordsAll, 8);
+        			this.isLoading = false;
+        			this.hotWordsAll = response.body.hotWords;
+        			this.hotWords = randomArray(this.hotWordsAll, 8);
         		});
         }
     }

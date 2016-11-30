@@ -8,6 +8,11 @@ let router = express.Router();
 let url = require('url');
 let queryString = require('querystring');
 let iconv = require('iconv-lite'); // 编码转换
+let request = require('request');// 发送请求
+let compression = require('compression');
+
+// gzip
+app.use(compression());
 
 // 修改模板文件后缀为html
 app.set('view engine','html');
@@ -35,35 +40,19 @@ app.get('/',(req,res)=>{
 
 // 接受http请求为'/book'时，返回数据
 app.get('/book',(req, response)=>{
-    let api = req.query.api;
+    let api = req.originalUrl.substr(10);
     let urlParse = url.parse(api);
     let querys = queryString.parse(urlParse.query);
     let options = {
         method: 'GET',
-        path: urlParse.pathname+'?'+ queryString.stringify(querys),
-        hostname: urlParse.hostname,
-        headers:{
-            "Content-Type": "text/html;charset=utf-8",
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'zh-CN,zh;q=0.8',
-            'Connection':'keep-alive',
-            'Host':urlParse.hostname,
-            'User-Agent':' ZhuiShuShenQi/3.64 (Android 5.1.1; Nubia NX511J / Nubia NX511J; ????)[preload=false;locale=zh_CN;clientidbase=android-zte]',
-            'X-User-Agent': 'ZhuiShuShenQi/3.64 (Android 5.1.1; Nubia NX511J / Nubia NX511J; ????)[preload=false;locale=zh_CN;clientidbase=android-zte]'
-            //'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
-        }
+        url: 'http://'+urlParse.host+urlParse.pathname+'?'+ queryString.stringify(querys),
+        gzip:true
     };
-    
-    http.get(options, function(res){
-        let datas = '';
-        res.setEncoding('utf8');
-        res.on('data', function(data){
-            datas += data;
-        });
-        res.on('end', function(){
-            response.json(datas);
-        });
+    // 字体乱码考虑是否被gzip压缩！！！
+    request(options, function(error, res, body){
+        if (!error && res.statusCode == 200) {
+            response.json(body);
+        }
     });
 });
 

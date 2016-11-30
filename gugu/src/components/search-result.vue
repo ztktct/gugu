@@ -1,45 +1,45 @@
 <template>
 	<div class="container">
-		<ul class="m-books-lists">
-			<li class="cell" @click='lookDetails(book._id)' v-for='book in bookLists'>
-				<div class="leftimg">
-	                <img :src="book.cover.substr(7)" height="64" width="44" alt="">
-	            </div>
-	            <div class="rightctx">
-	                <h3>{{book.title}}</h3>
-	                <p>{{book.latelyFollower}}人在追 | {{book.retentionRatio || 0}}%读者存留 | {{book.author}}著</p>
-	            </div>
-			</li>
-		</ul>
+		<Loading :isLoading='isLoading' :automatic='true'>
+			<BookLists :bookLists='bookLists'></BookLists>
+		</Loading>
 	</div>
 </template>
 
 <script>
     import {API_ADDRESS} from '../vuex/localdata';
+    import BookLists from './books-lists';
+    import Loading from '../components/loading';
 
 	export default {
 		data() {
 			return {
+				isLoading: false,
 				bookLists: [] // 书籍列表
 			}
+		},
+		components: {
+			BookLists,
+			Loading
 		},
 		watch: {
 			'$route'(to, from) {
 			    // 对路由hash变化作出响应...
-			    this.getBookLists();
+			    if (this.$route.params.query) {
+			    	this.getBookLists();
+			    }
 			}
 		},
 	    methods: {
 	    	// 获取书籍列表
 	    	getBookLists() {
+	    		this.isLoading = true;
+	    		this.bookLists = [];
 	    		this.$http.get(API_ADDRESS + '/book/fuzzy-search?query=' + this.$route.params.query)
 	    		.then(response => {
 	    			this.bookLists = response.body.books;
+	    			this.isLoading = false;
 	    		});
-	    	},
-	    	// 查看书籍详情
-	    	lookDetails(id) {
-	    		this.$router.push('/bookDetails/' + id);
 	    	}
 	    },
 	    activated() {

@@ -9,30 +9,44 @@
 // 缩放进出
 .scale-enter,.scale-leave-active{
 	opacity:0;
+	-webkit-transform:scale(.5);
 	transform:scale(.5);
 }
 .scale-enter-active{
 	z-index:15;
+	-webkit-transition: opacity .3s ease, transform .3s ease;
 	transition: opacity .3s ease, transform .3s ease;
 }
 .scale-leave-active{
+	-webkit-transition: opacity .3s ease, transform .3s ease;
 	transition: opacity .3s ease, transform .3s ease;
 }
 
 // 左进右出
 .move-enter{
 	z-index:15;
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform:translate3d(100%, 0, 0);
 	transform:translate3d(100%, 0, 0);
 }
 .move-enter-active{
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-webkit-transition:transform .3s ease;
 	transition:transform .3s ease;
 }
 .move-leave{
+	-webkit-transform:none;
 	transform:none;
 	z-index:-1;
 }
 .move-leave-active{
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform:translate3d(100%, 0, 0);
 	transform:translate3d(100%, 0, 0);
+	-webkit-transition:transform .3s ease;
 	transition:transform .3s ease;
 }
 
@@ -41,9 +55,11 @@
 	opacity: 0;
 }
 .fade-enter-active{
+	-webkit-transition: opacity .2s ease;
 	transition: opacity .2s ease;
 }
 .fade-leave-active{
 	opacity: 0;
+	-webkit-transition:  opacity .2s ease;
 	transition:  opacity .2s ease;
 }
