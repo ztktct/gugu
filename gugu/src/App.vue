@@ -19,11 +19,4 @@
       Home
     }
   }
-  let app = document.getElementById('app')
-  app.addEventListener('touchstart', function(e) {
-    e.stopPropagation();
-  })
-  document.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-  })
 </script>
