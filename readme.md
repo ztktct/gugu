@@ -1,6 +1,7 @@
 # 我的阅读器 webapp 项目构思、实践、上线(一期)
 
-### 测试地址：http://ztktct.tk:3005
+ 1、测试地址：http://ztktct.tk:3005
+ 2、APP下载地址：http://ztktct.tk:3005/gugu.apk
 
 ## 一、需求整理
     1、书架，存放收藏的图书
