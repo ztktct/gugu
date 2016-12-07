@@ -30,30 +30,30 @@ export default new Vuex.Store({
         },
         // 设置书籍的当前来源
         // playload = {
-        // 	 bookId:'',
-        // 	 source: {}
+        //   bookId:'',
+        //   source: {}
         // }
         SET_SHELF_SOURCE(state, playload) {
             for (let shelf of state.bookShelf) {
                 if (shelf._id == playload.bookId) {
                     shelf.currentSource = playload.source;
-            		localdata.setShelf(state.bookShelf);
+                    localdata.setShelf(state.bookShelf);
                     return;
                 }
             }
         },
         // 设置书籍当前章节
         // playload = {
-        // 	 bookId:'',
-        // 	 chapter: {},
-        // 	 index: 0
+        //   bookId:'',
+        //   chapter: {},
+        //   index: 0
         // }
         SET_SHELF_CHAPTER(state, playload) {
             for (let shelf of state.bookShelf) {
                 if (shelf._id == playload.bookId) {
                     shelf.currentChapter = playload.chapter;
                     shelf.currentChapter._index = playload.index;
-            		localdata.setShelf(state.bookShelf);
+                    localdata.setShelf(state.bookShelf);
                     return;
                 }
             }
@@ -61,10 +61,8 @@ export default new Vuex.Store({
         // 添加搜索记录
         ADD_HISTORY(state, history) {
             let bookHistory = state.bookHistory;
-            for (let i = 0, j = state.bookHistory.length; i < j; i++) {
-                if (bookHistory[i] === history) {
-                    return;
-                }
+            if (bookHistory.indexOf(history) != -1) {
+                return;
             }
             state.bookHistory.splice(0, 0, history);
             localdata.setHistory(state.bookHistory);
@@ -95,12 +93,12 @@ export default new Vuex.Store({
             commit('REMOVE_HISTORY');
         }
     }
-    // 	getters: {
-    // 		articleMd: (state, getters) => {
-    // 			return marked(getters.articleList)
-    // 		},
-    // 		articleList: state => {
-    // 			return state.articleList
-    // 		}
-    // 	}
+    //  getters: {
+    //      articleMd: (state, getters) => {
+    //          return marked(getters.articleList)
+    //      },
+    //      articleList: state => {
+    //          return state.articleList
+    //      }
+    //  }
 })

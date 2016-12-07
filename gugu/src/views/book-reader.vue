@@ -35,7 +35,7 @@
 					<Icon className='icon-shezhi'></Icon>
 					<p>设置</p>
 				</li>
-				<li>
+				<li @click='download'>
 					<Icon className='icon-iconfontxiazai'></Icon>
 					<p>缓存</p>
 				</li>
@@ -75,7 +75,7 @@
 	import Icon from '../components/icons';
 	import Loading from '../components/loading';
 	import Promise from 'es6-promise';
-	import PageSwiper from '../lib/PageSwiper';
+	import PageSwiper from '../lib/pageSwiper';
 	import {mapState, mapActions} from 'vuex';
 	import * as Book from '../lib/book_utils';
 
@@ -119,6 +119,10 @@
 				} else {
 					meta.setAttribute('content', '#4393E2');
 				}
+			},
+			// 缓存全本
+			download() {
+				this.$notice.push('功能完善中')
 			},
 			// 切换显示目录
 			toggleCatalog() {
@@ -206,11 +210,11 @@
 					return;
 				}
 			}
-			// 如果书籍未收藏，默认第0个书源第
+			// 如果书籍未收藏，默认第1个书源第
 			this.isAddShelf = false;
 			this.currentIndex = 0;
 			this.isLoading = true;
-			changeSource.call(this, 0).then(() => {
+			changeSource.call(this, 1).then(() => {
 				this.isLoading = false;
 			});
 		},

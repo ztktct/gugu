@@ -55,7 +55,6 @@
             let loading = this.$refs.loading;
             let spinner = this.$refs.spinner;
             let canMove = false;
-            console.log(canMove)
             // 如果是自动加载，就不需要手控
             if (this.automatic) return;
             /* eslint-disable no-new */

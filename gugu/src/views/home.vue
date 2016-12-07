@@ -100,6 +100,7 @@
                                     playLoad.source.updated = info.updated;
                                     this.setShelfSource(playLoad);
                                     this.hasNews.push(1);
+                                    this.$notice.push('书籍已更新');
                                 } else {
                                     this.hasNews.push(0);
                                 }

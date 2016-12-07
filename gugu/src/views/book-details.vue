@@ -1,68 +1,70 @@
 <template>
 	<div class="page page-fixed book">
 		<div class="book-top">
-			<div class="book-top-bg" :style="'background-image:url('+ bookDetails.cover+')'"></div>
-			<div class="book-top-bg2"></div>
-			<Navbar 
-			class='book-navbar'
-			:hasLeftBorder='false'
-			:hasSearchIcon='false'>
-				<h2 class="navbar-h2">书籍详情</h2>
-				<h3 class="navbar-h3" slot='navbar-right'>缓存全本</h3>
-			</Navbar>
-			<div class="book-top-ctx">
-				<div class="leftimg">
-					<img :src="bookDetails.cover" height="64" width="48" :alt="bookDetails.title">
+				<div class="book-top-bg" :style="'background-image:url('+ bookDetails.cover+')'"></div>
+				<div class="book-top-bg2"></div>
+				<Navbar 
+				class='book-navbar'
+				:hasLeftBorder='false'
+				:hasSearchIcon='false'>
+					<h2 class="navbar-h2">书籍详情</h2>
+					<h3 class="navbar-h3" @click='download' slot='navbar-right'>缓存全本</h3>
+				</Navbar>
+				<div class="book-top-ctx">
+					<div class="leftimg">
+						<img :src="bookDetails.cover" height="64" width="48" :alt="bookDetails.title">
+					</div>
+					<div class="midctx">
+						<h3>{{bookDetails.title}}</h3>
+						<p>
+							<router-link :to="'/search/result/'+bookDetails.author">{{bookDetails.author || '作者'}}</router-link> 
+							| {{bookDetails.cat}} 
+							| {{Math.ceil(bookDetails.wordCount / 10000) || 0}}万字
+						</p>
+						<p>{{bookDetails.updated | timeSemantic}}</p>
+					</div>
+					<div class="rightctx">
+						<Btn :btnEvent='btnEvent'>开始阅读</Btn>
+						<Btn v-if='!hasInShelf' :btnEvent='addToShelf'>+ 追更新</Btn>
+						<Btn v-else className='disabled' :btnEvent='removeFromShelf'>- 不追更</Btn>
+					</div>
 				</div>
-				<div class="midctx">
-					<h3>{{bookDetails.title}}</h3>
-					<p>
-						<router-link :to="'/search/result/'+bookDetails.author">{{bookDetails.author}}</router-link> 
-						| {{bookDetails.cat}} 
-						| {{Math.ceil(bookDetails.wordCount / 10000)}}万字
-					</p>
-					<p>{{bookDetails.updated | timeSemantic}}</p>
-				</div>
-				<div class="rightctx">
-					<Btn :btnEvent='btnEvent'>开始阅读</Btn>
-					<Btn v-if='!hasInShelf' :btnEvent='addToShelf'>+ 追更新</Btn>
-					<Btn v-else className='disabled' :btnEvent='removeFromShelf'>- 不追更</Btn>
-				</div>
-			</div>
 		</div>
 		<div class="container">
-			<ul class="book-states book-block">
-				<li>
-					<p>追更人数</p>
-					<strong>{{bookDetails.latelyFollower}}</strong>
-				</li>
-				<li>
-					<p>读者存留率</p>
-					<strong>{{bookDetails.retentionRatio || 0}}%</strong>
-				</li>
-				<li>
-					<p>日更新字数</p>
-					<strong>{{bookDetails.serializeWordCount}}</strong>
-				</li>
-			</ul>
-			<div class="book-keywords book-block">
-				<ul>
-					<router-link tag='li' :to="'/bookTags/'+tag" v-for='tag in bookDetails.tags'>{{tag}}</router-link>
+			<Loading :isLoading='isloading' :automatic='true'>
+				<ul class="book-states book-block">
+					<li>
+						<p>追更人数</p>
+						<strong>{{bookDetails.latelyFollower}}</strong>
+					</li>
+					<li>
+						<p>读者存留率</p>
+						<strong>{{bookDetails.retentionRatio || 0}}%</strong>
+					</li>
+					<li>
+						<p>日更新字数</p>
+						<strong>{{bookDetails.serializeWordCount}}</strong>
+					</li>
 				</ul>
-			</div>
-			<div class="book-introduce book-block" :class='{ellipsis: !showIntroduce}' @click='showIntroduceFn' v-html='bookDetails.longIntro'>
-			</div>
-			<div class="book-likes book-block">
-				<h3>猜你喜欢</h3>
-				<ul>
-					<router-link tag='li' :to="'/bookDetails/'+book._id" v-for='book in booklikes'>
-						<figure>
-							<img :src="book.cover.substr(7)" height="64" width="48" :alt="book.title">
-							<figcaption>{{book.title}}</figcaption>
-						</figure>
-					</router-link>
-				</ul>
-			</div>
+				<div class="book-keywords book-block">
+					<ul>
+						<router-link tag='li' :to="'/bookTags/'+tag" v-for='tag in bookDetails.tags'>{{tag}}</router-link>
+					</ul>
+				</div>
+				<div class="book-introduce book-block" :class='{ellipsis: !showIntroduce}' @click='showIntroduceFn' v-html='bookDetails.longIntro'>
+				</div>
+				<div class="book-likes book-block">
+					<h3>猜你喜欢</h3>
+					<ul>
+						<router-link tag='li' :to="'/bookDetails/'+book._id" v-for='book in booklikes'>
+							<figure>
+								<img :src="book.cover.substr(7)" height="64" width="48" :alt="book.title">
+								<figcaption>{{book.title}}</figcaption>
+							</figure>
+						</router-link>
+					</ul>
+				</div>
+			</Loading>
 		</div>
 	</div>
 </template>
@@ -72,11 +74,13 @@
 	import Btn from '../components/btn';
     import {API_ADDRESS} from '../vuex/localdata';
     import { mapState, mapActions } from 'vuex';
+	import Loading from '../components/loading';
 	import * as Book from '../lib/book_utils';
 
 	export default{
 		data() {
 			return {
+				isloading: false,
 				bookId: 0,				// 书籍ID
 				hasInShelf: false,		// 是否已经添加到书架
 				bookDetails: {},		// 书籍详情
@@ -86,7 +90,8 @@
 		},
 		components: {
 			Navbar,
-			Btn
+			Btn,
+			Loading
 		},
 		computed: {
 			...mapState([
@@ -106,8 +111,13 @@
 			showIntroduceFn() {
 				this.showIntroduce = true;
 			},
+			// 缓存全本
+			download() {
+				this.$notice.push('功能完善中')
+			},
 			// 获取书籍相关信息
 			getBookAndLikes() {
+				this.isloading = true;
 				// 检测书籍是否已被添加到书架
 				this.hasInShelf = false;
 				for (let shelf of this.bookShelf) {
@@ -124,6 +134,7 @@
 					// 获取真实的封面地址
 					this.bookDetails.cover = this.bookDetails.cover.substr(7);
 					this.bookDetails.longIntro = this.bookDetails.longIntro.replace(/\r/g, '<br/>');
+					this.isloading = false;
 				});
 				// 获取相关书籍，猜你喜欢
 				this.$http.get(API_ADDRESS + '/book/' + this.bookId + '/recommend')
@@ -151,12 +162,14 @@
 					book.currentChapter._index = 0;
 					this.hasInShelf = true;
 					this.addShelf(book);
+					this.$notice.push('已添加到书架');
 				})
 			},
 			// 取消追更，从书架删除
 			removeFromShelf() {
 				this.hasInShelf = false;
 				this.reduceShelf(this.bookId);
+				this.$notice.push('已从书架删除');
 			}
 		},
 		watch: {
@@ -245,6 +258,7 @@
 					margin: 5px 0 6px;
 					@include ellipsis(1);
 					transition: font-size .3s ease;
+					min-height: 16px;
 				}
 				p{
 					@include ellipsis(1);

@@ -57,6 +57,8 @@
     margin: 0;
     padding: 10px;
     list-style: none;
+    height:100%;
+    overflow:auto;
     .cell{
         margin-bottom: 15px;
         &.hasNew{
@@ -147,4 +149,21 @@
             }
         }
     }
+}
+
+// lazyload
+img[lazy]{
+    -webkit-transition: opacity .5s ease;
+    transition: opacity .5s ease;
+}
+img[lazy=loading] {
+    opacity:0;
+}
+img[lazy=error] {
+    background:url(../icon.png) no-repeat center center;
+    -webkit-background-size:40px auto;
+    background-size:40px auto;
+}
+img[lazy=loaded] {
+    opacity:1;
 }

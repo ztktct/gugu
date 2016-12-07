@@ -5,7 +5,9 @@ import store from './vuex/store';
 import VueResource from 'vue-resource';
 import { SERVER_ADDRESS } from './vuex/localdata';
 import timeSemantic from './lib/timeSemantic';
+import VueLazyload from 'vue-lazyload'
 
+Vue.use(VueLazyload)
 Vue.use(VueResource);
 // vue-resource 全局设置
 Vue.http.options.emulateJSON = true;

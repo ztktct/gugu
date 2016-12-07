@@ -1,8 +1,8 @@
 <template>
-	<ul class="m-books-lists">
+	<ul class="m-books-lists" id="bookLists">
 		<li class="cell" @click='lookDetails(book._id)' v-for='book in bookLists'>
 			<div class="leftimg">
-	            <img :src="book.cover ? book.cover.substr(7) : ''" height="64" width="48" alt="">
+	            <img v-lazy.bookLists="book.cover ? book.cover.substr(7) : ''" height="64" width="48" alt="">
 	        </div>
 	        <div class="rightctx">
 	            <h3>{{book.title}}</h3>

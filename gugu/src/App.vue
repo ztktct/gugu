@@ -6,6 +6,7 @@
             <router-view></router-view>
           </keep-alive>
         </transition>
+        <Notice></Notice>
     </div>
 </template>
 
@@ -14,9 +15,11 @@
   require('./assets/style/_module.scss');
   require('./assets/style/_animation.scss');
   import Home from './views/home';
+  import Notice from './components/notice';
   export default {
     components: {
-      Home
+      Home,
+      Notice
     }
   }
 </script>
