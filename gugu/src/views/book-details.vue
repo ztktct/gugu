@@ -144,6 +144,7 @@
 			},
 			// 添加到书架，追更
 			addToShelf() {
+				if (this.isloading) return;
 				let book = {
 					_id: this.bookId,
 					cover: this.bookDetails.cover,

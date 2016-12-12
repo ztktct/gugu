@@ -13,6 +13,10 @@ export default new Vuex.Store({
     mutations: {
         // 添加到书架
         ADD_SHELF(state, book) {
+            let bookShelf = state.bookShelf;
+            for (let shelf of bookShelf) {
+                if (shelf._id == book._id) return; // 防止在网络慢的情况下重复添加
+            }
             state.bookShelf.splice(0, 0, book);
             localdata.setShelf(state.bookShelf);
         },
