@@ -152,6 +152,7 @@
 					updated: this.bookDetails.updated,
 					auhor: this.bookDetails.author
 				};
+				this.isloading = true;
 				Book.getSources.call(this, this.bookId)
 				.then(sources => {
 					book.currentSource = sources[0]; // 默认第一个来源
@@ -163,6 +164,7 @@
 					this.hasInShelf = true;
 					this.addShelf(book);
 					this.$notice.push('已添加到书架');
+					this.isloading = false;
 				})
 			},
 			// 取消追更，从书架删除
