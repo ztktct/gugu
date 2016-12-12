@@ -1,11 +1,12 @@
 <template>
     <div id="app">
         <Home></Home>
-        <transition name='move' mode='in-out'>
+        <!-- 考虑页面流畅度，暂时停用切换效果 -->
+        <!-- <transition name='move' mode='in-out'> -->
           <keep-alive>
             <router-view></router-view>
           </keep-alive>
-        </transition>
+        <!-- </transition> -->
         <Notice></Notice>
     </div>
 </template>
