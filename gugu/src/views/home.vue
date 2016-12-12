@@ -13,6 +13,8 @@
                     <li  class="cell"
                     v-for='(book, index) in bookShelf'
                     @click='reader(book, index)'
+                    @touchstart='touchstart(book)'
+                    @touchend='touchend'
                     :class='{hasNew: hasNews[index] && hasNews[index] != 0}'>
                         <div class="leftimg">
                             <img :src="book.cover" height="64" width="44" alt="">
@@ -29,6 +31,9 @@
                 </router-link>
             </Loading>
         </div>
+        <Vdialog :show='showDialog' :clickHandle='hideDialog' :title='dialogTitle'>
+            <li class="cell" @click='deleteShelf'>删除</li>
+        </Vdialog>
     </div>
 </template>
 
@@ -36,6 +41,7 @@
     import Navbar from '../components/navbar';
     import Icon from '../components/icons';
     import Loading from '../components/loading';
+    import Vdialog from '../components/dialog';
     import {API_ADDRESS} from '../vuex/localdata';
     import { mapState, mapActions } from 'vuex';
 
@@ -43,14 +49,20 @@
         data() {
             return {
                 temporary: true,
-                hasNews: [],
-                isLoading: false
+                hasNews: [],        // 每本书籍是否有更新
+                isLoading: false,
+                willDelete: '',     // 将要删除的书籍ID
+                isTouching: false,   // 正在触摸
+                touchTimer: null,
+                showDialog: false,
+                dialogTitle: ''
             }
         },
         components: {
             Navbar,
             Icon,
-            Loading
+            Loading,
+            Vdialog
         },
         computed: {
             ...mapState([
@@ -67,7 +79,8 @@
         methods: {
             ...mapActions([
                 'setShelfSource',
-                'setShelfUpdate'
+                'setShelfUpdate',
+                'reduceShelf'
             ]),
             searchEvent() {
                 this.$router.push('/search/keywords')
@@ -76,6 +89,30 @@
                 this.hasNews.splice(index, 1, 0);
                 this.setShelfUpdate(book);
                 this.$router.push('/BookReader/' + book._id);
+            },
+            // 长按删除
+            touchstart(book) {
+                this.isTouching = true;
+                this.touchTimer = setTimeout(() => {
+                    if (this.isTouching) {
+                        this.willDelete = book._id;
+                        this.dialogTitle = book.title;
+                        this.showDialog = true;
+                    }
+                }, 750);
+            },
+            touchend() {
+                this.isTouching = false;
+                clearTimeout(this.touchTimer);
+            },
+            // 删除书籍
+            deleteShelf() {
+                this.reduceShelf(this.willDelete);
+                this.hideDialog();
+            },
+            // 隐藏对话框
+            hideDialog() {
+                this.showDialog = false;
             },
             update() {
                 this.isLoading = true;

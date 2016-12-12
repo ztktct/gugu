@@ -10,7 +10,8 @@
 .page,
 #app {
     height: 100%;
-    position: relative;
+    width:100%;
+    position: absolute;
     background-color: #fff;
     overflow:hidden;
     .container{
@@ -19,11 +20,7 @@
     }
 }
 .page{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+    @extend %fullpage;
     z-index:5;
 }
 .page-fixed {
@@ -48,7 +45,7 @@
     position: relative;
     background-color: #fff;
     &:active {
-        background-color: #f5f5f5;
+        background-color: #eee;
     }
 }
 
