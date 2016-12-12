@@ -1,5 +1,5 @@
 <template>
-	<div class="page page-fixed">
+	<div class="page page-fixed" @touchstart='hideQueryLists'>
 		<Navbar :searchEvent="search">
 			<div class="m-search-input">
 				<input type="text" ref='input' v-model.trim='query' @focus='myfocus' @blur='showLists = false' placeholder="输入书名或者作者名">
@@ -48,7 +48,9 @@
         			_self.$http.get(API_ADDRESS + '/book/auto-complete?query=' + _self.query)
         			.then(response => {
         				_self.relativeWords = response.body.keywords;
-        				_self.showLists = true;
+                        if (_self.canShowLists) {
+                            _self.showLists = true;
+                        }
         			});
         		} else {
         			_self.showLists = false;
@@ -68,6 +70,11 @@
         	myfocus() {
         		this.canShowLists = true;
         	},
+            // 隐藏关联词
+            hideQueryLists() {
+                this.canShowLists = false;
+                this.showLists = false;
+            },
         	// 关键词子组件触发搜索
         	childSearch() {
         		this.query = this.$route.params.query;
