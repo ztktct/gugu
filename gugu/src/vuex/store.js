@@ -34,9 +34,23 @@ export default new Vuex.Store({
         //   source: {}
         // }
         SET_SHELF_SOURCE(state, playload) {
-            for (let shelf of state.bookShelf) {
+            let bookShelf = state.bookShelf;
+            let source = playload.source;
+            for (let shelf of bookShelf) {
                 if (shelf._id == playload.bookId) {
-                    shelf.currentSource = playload.source;
+                    shelf.currentSource = source;
+                    shelf.lastChapter = source.lastChapter;
+                    localdata.setShelf(state.bookShelf);
+                    return;
+                }
+            }
+        },
+        // 设置当前书籍更新日期
+        // 可以根据书籍的更新时间判断用户有没有阅读已更新的书籍
+        SET_SHELF_UPDATED(state, book) {
+            for (let shelf of state.bookShelf) {
+                if (shelf._id == book._id) {
+                    shelf.updated = book.currentSource.updated;
                     localdata.setShelf(state.bookShelf);
                     return;
                 }
@@ -82,6 +96,9 @@ export default new Vuex.Store({
         },
         setShelfSource({ commit }, playload) {
             commit('SET_SHELF_SOURCE', playload);
+        },
+        setShelfUpdate({ commit }, book) {
+            commit('SET_SHELF_UPDATED', book)
         },
         setShelfChapter({ commit }, playload) {
             commit('SET_SHELF_CHAPTER', playload);

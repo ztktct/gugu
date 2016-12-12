@@ -16,7 +16,6 @@ Vue.http.interceptors.push((request, next) => {
     // continue to next interceptor
     next(response => {
         if (!response.ok) {
-            console.log(response)
             console.log('获取数据失败');
             return;
         }

@@ -66,13 +66,15 @@
         },
         methods: {
             ...mapActions([
-                'setShelfSource'
+                'setShelfSource',
+                'setShelfUpdate'
             ]),
             searchEvent() {
                 this.$router.push('/search/keywords')
             },
             reader(book, index) {
-                this.hasNews[index] = 0;
+                this.hasNews.splice(index, 1, 0);
+                this.setShelfUpdate(book);
                 this.$router.push('/BookReader/' + book._id);
             },
             update() {
@@ -111,7 +113,7 @@
                     this.isLoading = false;
                 }).catch(error => {
                     if (error) {
-                        console.log(error)
+                        this.$notice.push('请检查网络连接！')
                     }
                     this.isLoading = false;
                 })
@@ -146,6 +148,9 @@
             font-size: 20px;
             margin: 0 20px 0 27px;
         }
+    }
+    .m-books-lists{
+        max-height:none;
     }
   }
 </style>
