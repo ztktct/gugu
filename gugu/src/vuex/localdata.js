@@ -1,5 +1,5 @@
 let SERVER_ADDRESS = ''; // 追书官方服务器
-	// SERVER_ADDRESS = '/book?api=';// 服务器
+	SERVER_ADDRESS = '/book?api=';// 服务器
 	// SERVER_ADDRESS = 'http://192.168.0.104:3003/book?api='; // 本地环境
 
 const API_ADDRESS = 'http://api.zhuishushenqi.com';
