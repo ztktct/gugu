@@ -13,7 +13,8 @@
                     <li  class="cell"
                     v-for='(book, index) in bookShelf'
                     @click='reader(book, index)'
-                    @touchstart='touchstart(book)'
+                    @touchstart='touchstart(book, $event)'
+                    @touchmove='touchmove($event)'
                     @touchend='touchend'
                     :class='{hasNew: hasNews[index] && hasNews[index] != 0}'>
                         <div class="leftimg">
@@ -53,6 +54,7 @@
                 isLoading: false,
                 willDelete: '',     // 将要删除的书籍ID
                 isTouching: false,   // 正在触摸
+                touchDistance: [0, 0],
                 touchTimer: null,
                 showDialog: false,
                 dialogTitle: ''
@@ -91,17 +93,25 @@
                 this.$router.push('/BookReader/' + book._id);
             },
             // 长按删除
-            touchstart(book) {
+            touchstart(book, event) {
                 this.isTouching = true;
                 this.touchTimer = setTimeout(() => {
-                    if (this.isTouching) {
+                    let x = this.touchDistance[0];
+                    let y = this.touchDistance[0];
+                    let z = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                    if (this.isTouching && z <= 10) {
                         this.willDelete = book._id;
                         this.dialogTitle = book.title;
                         this.showDialog = true;
                     }
                 }, 750);
             },
+            touchmove(event) {
+                let touch = event.changedTouches[0];
+                this.touchDistance = [touch.clientX, touch.clientY];
+            },
             touchend() {
+                this.touchDistance = [0, 0];
                 this.isTouching = false;
                 clearTimeout(this.touchTimer);
             },
