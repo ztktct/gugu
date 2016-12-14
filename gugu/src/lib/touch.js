@@ -18,7 +18,7 @@
  *   touchend(): ------------↑
  *   tap(): -----------------↑
  */
-
+import {throttle} from './utils';
 (function() {
     'use strict';
 
@@ -67,7 +67,7 @@
             let relative = relatives[options.relative];
 
             target.addEventListener('touchstart', touchStartHandle.bind(this));
-            target.addEventListener('touchmove', touchMoveHandle.bind(this));
+            target.addEventListener('touchmove', touchMoveHandle.call(this));
             target.addEventListener('touchend', touchendHandle.bind(this));
 
             // 触摸开始事件处理程序
@@ -94,25 +94,27 @@
                 options.touchstart && options.touchstart.call(this, outFingers, event);
             }
 
-            // 触摸移动事件处理
+            // 触摸移动事件处理 函数节流，节省开销
             function touchMoveHandle(event) {
-                stopAndprevent(event);
-                let touches = event.changedTouches;
-                let length = touches.length;
-                for (let i = 0; i < length; i++) {
-                    let finger = touches[i];
-                    let outfinger = outFingers[i];
-                    let currentX = finger[relative + 'X']; // 当前位置X
-                    let currentY = finger[relative + 'Y']; // 当前位置Y
-                    let distanceX = currentX - outfinger.initPos[0]; // 滑动距离X
-                    let distanceY = currentY - outfinger.initPos[1]; // 滑动距离Y
+                return throttle(event => {
+                    stopAndprevent(event);
+                    let touches = event.changedTouches;
+                    let length = touches.length;
+                    for (let i = 0; i < length; i++) {
+                        let finger = touches[i];
+                        let outfinger = outFingers[i];
+                        let currentX = finger[relative + 'X']; // 当前位置X
+                        let currentY = finger[relative + 'Y']; // 当前位置Y
+                        let distanceX = currentX - outfinger.initPos[0]; // 滑动距离X
+                        let distanceY = currentY - outfinger.initPos[1]; // 滑动距离Y
 
-                    outfinger.currentPos = [currentX, currentY];
-                    outfinger.distance = [distanceX, distanceY];
-                    outfinger.endTime = Date.now();
-                }
+                        outfinger.currentPos = [currentX, currentY];
+                        outfinger.distance = [distanceX, distanceY];
+                        outfinger.endTime = Date.now();
+                    }
 
-                options.touchmove && options.touchmove.call(this, outFingers, event);
+                    options.touchmove && options.touchmove.call(this, outFingers, event);
+                }, 13, {trailing: false});
             }
 
             // 触摸结束事件处理
