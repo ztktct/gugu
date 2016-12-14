@@ -77,6 +77,7 @@ import { sumArray } from './utils';
                     if (currentX >= midLeft && currentX <= midRight) {
                         // 触摸板中间区域
                         options.midTapEnd && options.midTapEnd(_self);
+                        _self.swiper(_self.step);
                     } else if (currentX < midLeft) {
                         // 触摸板左侧区域
                         _self.swiper(--_self.step);
