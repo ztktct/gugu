@@ -22,6 +22,24 @@
     import Icon from '../components/icons';
     import {API_ADDRESS} from '../vuex/localdata';
     import { mapActions } from 'vuex';
+    import { debounce } from '../lib/utils';
+
+    // 查询关联词，函数去抖，当用户停止输入300ms后在查询
+    let queryKeyword = debounce(function() {
+        this.showClear = this.query.length >= 1 || false;
+        // 只有当输入不为空，并且允许关联词显示的情况下采取请求数据
+        if (this.query !== '' && this.canShowLists) {
+            this.$http.get(API_ADDRESS + '/book/auto-complete?query=' + this.query)
+            .then(response => {
+                this.relativeWords = response.body.keywords;
+                if (this.canShowLists) {
+                    this.showLists = true;
+                }
+            });
+        } else {
+            this.showLists = false;
+        }
+    }, 300);
 
     export default {
     	data() {
@@ -41,20 +59,7 @@
         watch: {
         	// 当搜索的时候联想关键词
         	query() {
-        		let _self = this;
-        		_self.showClear = _self.query.length >= 1 || false;
-        		// 只有当输入不为空，并且允许关联词显示的情况下采取请求数据
-        		if (_self.query !== '' && _self.canShowLists) {
-        			_self.$http.get(API_ADDRESS + '/book/auto-complete?query=' + _self.query)
-        			.then(response => {
-        				_self.relativeWords = response.body.keywords;
-                        if (_self.canShowLists) {
-                            _self.showLists = true;
-                        }
-        			});
-        		} else {
-        			_self.showLists = false;
-        		}
+        		queryKeyword.call(this);
         	}
         },
         methods: {
